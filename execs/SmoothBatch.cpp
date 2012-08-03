@@ -297,7 +297,7 @@ int main(int argc, char **argv)
   int fwid=3;
   vtkSQKernelConvolution *kconv=vtkSQKernelConvolution::New();
   vtkSQMedianFilter *medf=vtkSQMedianFilter::New();
-  if (kconv->Initialize(root)<0)
+  if (kconv->Initialize(root)==0)
     {
     sf=kconv;
     fwid=kconv->GetKernelWidth();
@@ -305,7 +305,7 @@ int main(int argc, char **argv)
     medf=0;
     }
   else
-  if (medf->Initialize(root)<0)
+  if (medf->Initialize(root)==0)
     {
     sf=medf;
     fwid=medf->GetKernelWidth();
@@ -447,12 +447,20 @@ int main(int argc, char **argv)
       r->ClearPointArrayStatus();
       r->SetPointArrayStatus(vecName.c_str(),1);
 
-      sf->SetInputArrayToProcess(
+      if (kconv)
+        {
+        kconv->ClearInputArrays();
+        kconv->AddInputArray(vecName.c_str());
+        }
+      else
+        {
+        sf->SetInputArrayToProcess(
             0,
             0,
             0,
             vtkDataObject::FIELD_ASSOCIATION_POINTS,
             vecName.c_str());
+        }
 
       w->Update();
 

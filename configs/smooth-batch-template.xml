@@ -9,18 +9,32 @@
        <arrays> b </arrays>
   </vtkSQBOVReader>
 
+
+  <!--
+  One can use either median filter, or the
+  kernel convolution. Comment out the unused
+  tag.
+  -->
   <!--
   <vtkSQMedianFilter stencilWidth="9" />
   -->
 
   <!--
+  kernel convolution options:
+
+  kernel types:
+    Gaussian=0
+    Log Of Gaussian=1
+    Constant=2
+
   memory types:
     gloabl=0
     constant=1
     texture=2
   -->
   <vtkSQKernelConvolution
-      stencilWidth="19"
+      stencilWidth="13"
+      kernelType="0"
       CPUDriverOptimization="1"
       numberOfMPIRanksToUseCUDA="0"
       numberOfActiveCUDADevices="0"
