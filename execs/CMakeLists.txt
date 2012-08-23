@@ -36,25 +36,31 @@ message(STATUS "MPI found.")
 get_filename_component(ParaView_SOURCE ${PARAVIEW_USE_FILE} PATH)
 set(SciberQuestToolKit_DIR "${ParaView_SOURCE}/Plugins/SciberQuestToolKit" CACHE FILEPATH "SciberQuestToolKit sources")
 include_directories("${SciberQuestToolKit_DIR}")
+find_library(SciberQuestToolKit_Lib SciberQuestToolKit "${ParaView_DIR}/bin" "${ParaView_DIR}/lib")
 message(STATUS "SciberQuestToolKit found: ${SciberQuestToolKit_DIR}")
-
+message(STATUS "SciberQUestToolKit lib: ${SciberQuestToolKit_Lib}")
 # executables
-add_executable(MagnetosphereTopoBatch MagnetosphereTopoBatch.cpp DebugUtil.cxx)
-target_link_libraries(MagnetosphereTopoBatch ${MPI_LIBRARIES} SciberQuestToolKit)
-install(TARGETS MagnetosphereTopoBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
-add_executable(SmoothBatch SmoothBatch.cpp DebugUtil.cxx)
-target_link_libraries(SmoothBatch ${MPI_LIBRARIES} SciberQuestToolKit)
+
+add_executable(PoincareBatch PoincareBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+target_link_libraries(PoincareBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+install(TARGETS PoincareBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+
+add_executable(SmoothBatch SmoothBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+target_link_libraries(SmoothBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
 install(TARGETS SmoothBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
-add_executable(VortexDetectBatch VortexDetectBatch.cpp DebugUtil.cxx)
-target_link_libraries(VortexDetectBatch ${MPI_LIBRARIES} SciberQuestToolKit)
-install(TARGETS VortexDetectBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
-
-add_executable(SlicerBatch SlicerBatch.cpp DebugUtil.cxx)
-target_link_libraries(SlicerBatch ${MPI_LIBRARIES} SciberQuestToolKit)
-install(TARGETS SlicerBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
-
-add_executable(MagnetosphereTopoBatchPVD MagnetosphereTopoBatchPVD.cpp DebugUtil.cxx)
-target_link_libraries(MagnetosphereTopoBatchPVD ${MPI_LIBRARIES} SciberQuestToolKit)
-install(TARGETS MagnetosphereTopoBatchPVD DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#
+# TODO -- the following need integrate batch utils and be tested
+#
+#add_executable(MagnetosphereTopoBatch MagnetosphereTopoBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+#target_link_libraries(MagnetosphereTopoBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+#install(TARGETS MagnetosphereTopoBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#
+#add_executable(VortexDetectBatch VortexDetectBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+#target_link_libraries(VortexDetectBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+#install(TARGETS VortexDetectBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#
+#add_executable(SlicerBatch SlicerBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+#target_link_libraries(SlicerBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+#install(TARGETS SlicerBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)

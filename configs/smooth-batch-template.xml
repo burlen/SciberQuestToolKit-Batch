@@ -6,18 +6,8 @@
       ISubset="-1 -1"
       JSubset="-1 -1"
       KSubset="-1 -1">
-       <arrays> b </arrays>
+       <arrays> ue </arrays>
   </vtkSQBOVReader>
-
-
-  <!--
-  One can use either median filter, or the
-  kernel convolution. Comment out the unused
-  tag.
-  -->
-  <!--
-  <vtkSQMedianFilter stencilWidth="9" />
-  -->
 
   <!--
   kernel convolution options:
@@ -27,13 +17,14 @@
     Log Of Gaussian=1
     Constant=2
 
-  memory types:
-    gloabl=0
+  gpu memory types:
+    global=0
     constant=1
     texture=2
   -->
   <vtkSQKernelConvolution
       stencilWidth="13"
+      computeResidual="0"
       kernelType="0"
       CPUDriverOptimization="1"
       numberOfMPIRanksToUseCUDA="0"

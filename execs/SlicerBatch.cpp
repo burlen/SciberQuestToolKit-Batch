@@ -23,7 +23,7 @@ Copyright 2008 SciberQuest Inc.
 #include "SQMacros.h"
 #include "postream.h"
 #include "vtkSQBOVReader.h"
-
+#include "Util.h"
 
 
 #include <sstream>
@@ -47,36 +47,6 @@ using std::string;
 
 #define SQ_EXIT_ERROR 1
 #define SQ_EXIT_SUCCESS 0
-
-//*****************************************************************************
-void PVTK_Exit(vtkMPIController* controller, int code)
-{
-  controller->Finalize();
-  controller->Delete();
-  vtkAlgorithm::SetDefaultExecutivePrototype(0);
-  exit(code);
-}
-
-//*****************************************************************************
-int IndexOf(double value, double *values, int first, int last)
-{
-  int mid=(first+last)/2;
-  if (values[mid]==value)
-    {
-    return mid;
-    }
-  else
-  if (mid!=first && values[mid]>value)
-    {
-    return IndexOf(value,values,first,mid-1);
-    }
-  else
-  if (mid!=last && values[mid]<value)
-    {
-    return IndexOf(value,values,mid+1,last);
-    }
-  return -1;
-}
 
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
