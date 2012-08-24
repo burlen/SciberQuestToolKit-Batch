@@ -39,9 +39,8 @@ include_directories("${SciberQuestToolKit_DIR}")
 find_library(SciberQuestToolKit_Lib SciberQuestToolKit "${ParaView_DIR}/bin" "${ParaView_DIR}/lib")
 message(STATUS "SciberQuestToolKit found: ${SciberQuestToolKit_DIR}")
 message(STATUS "SciberQUestToolKit lib: ${SciberQuestToolKit_Lib}")
+
 # executables
-
-
 add_executable(PoincareBatch PoincareBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(PoincareBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
 install(TARGETS PoincareBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
@@ -49,6 +48,10 @@ install(TARGETS PoincareBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 add_executable(SmoothBatch SmoothBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(SmoothBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
 install(TARGETS SmoothBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+
+add_executable(FTLEBatch FTLEBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+target_link_libraries(FTLEBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+install(TARGETS FTLEBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
 #
 # TODO -- the following need integrate batch utils and be tested
