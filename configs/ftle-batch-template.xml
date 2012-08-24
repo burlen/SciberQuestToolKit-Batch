@@ -1,33 +1,32 @@
 <?xml version="1.0"?>
-<PoincareBatch>
+<FTLEBatch>
 
   <vtkSQBOVMetaReader
       cb_enable="1"
       ISubset="-1 -1"
       JSubset="-1 -1"
       KSubset="-1 -1"
-      decomp_dims="4 4 4"
-      block_cache_size="64"
-      periodic_bc="1 1 1"
+      decomp_dims="4 4 1"
+      block_cache_size="16"
       n_ghosts="1">
-       <arrays> b </arrays>
+       <arrays> v </arrays>
   </vtkSQBOVMetaReader>
 
   <vtkSQPlaneSource
-      origin="-3 0 -3"
-      point1="3 0 -3"
-      point2="-3 0 3"
-      resolution="4 4"
-      immediate_mode="1"/>
+      origin="1 1 0"
+      point1="126 1 0"
+      point2="1 126 0"
+      resolution="128 128"
+      immediate_mode="0"/>
 
   <vtkSQFieldTracer
       integrator_type="2"
-      max_arc_length="1000"
+      max_integration_interval="48"
       max_step_size="0.1"
       null_threshold="0.001"
       dynamic_scheduler="1"
-      master_block_size="1"
-      worker_block_size="1"/>
+      master_block_size="8"
+      worker_block_size="64"/>
       <!--
       ==================
       settings for rk4-5
@@ -48,4 +47,6 @@
       max_step_size="0.1"
       -->
 
-</PoincareBatch>
+  <vtkSQFTLE/>
+
+</FTLEBatch>
