@@ -44,9 +44,6 @@ int main(int argc, char **argv)
   // initialize mpi
   vtkMultiProcessController *controller=Initialize(&argc,&argv);
 
-  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  log->SetFileName("FTLEBatch");
-
   // distribute the configuration file name and time range
   string config;
   string bov;
@@ -66,6 +63,11 @@ int main(int argc, char **argv)
   // parse config
   vtkSmartPointer<vtkPVXMLElement> root;
   root.TakeReference(ParseConfiguration(controller,config,"FTLEBatch"));
+
+  // intialize log
+  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
+  log->SetFileName("FTLEBatch.log");
+  log->Initialize(root);
 
   // build the pipeline
   vtkSQBOVMetaReader *r=vtkSQBOVMetaReader::New();

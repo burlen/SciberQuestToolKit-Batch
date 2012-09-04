@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <SmoothBatch>
 
+  <vtkSQLog
+      global_level="1"
+      file_name="SmoothBatch.log"/>
+
   <vtkSQBOVReader
       cb_enable="1"
       ISubset="-1 -1"

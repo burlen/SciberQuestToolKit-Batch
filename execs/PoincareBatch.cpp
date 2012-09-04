@@ -45,9 +45,6 @@ int main(int argc, char **argv)
   // initialize mpi
   vtkMultiProcessController *controller=Initialize(&argc,&argv);
 
-  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  log->SetFileName("PoincareBatch");
-
   // distribute the configuration file name and time range
   string config;
   string bov;
@@ -68,6 +65,11 @@ int main(int argc, char **argv)
   vtkSmartPointer<vtkPVXMLElement> root;
   root.TakeReference(ParseConfiguration(controller,config,"PoincareBatch"));
 
+  // intialize the log
+  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
+  log->SetFileName("PoincareBatch.log");
+  log->Initialize(root);
+
   // build the pipeline
   vtkSQBOVMetaReader *r=vtkSQBOVMetaReader::New();
   vtkSQPlaneSource *ps=vtkSQPlaneSource::New();
@@ -85,6 +87,7 @@ int main(int argc, char **argv)
 
   // initialize reader
   vector<string> arrays;
+  r->SetLogLevel(1);
   if (r->Initialize(root,bov.c_str(),arrays))
     {
     sqErrorMacro(pCerr(),"Failed to initialize reader.");
@@ -98,6 +101,7 @@ int main(int argc, char **argv)
   r->SetPointArrayStatus(arrays[0].c_str(),1);
 
   // initialize seed source
+  ps->SetLogLevel(1);
   if (ps->Initialize(root))
     {
     sqErrorMacro(pCerr(),"Failed to initialize seeds.");
@@ -111,6 +115,7 @@ int main(int argc, char **argv)
   ms->SetResolution(1,1);
 
   // initialize poincare mapper
+  ft->SetLogLevel(1);
   if (ft->Initialize(root))
     {
     sqErrorMacro(pCerr(),"Failed to initialize field tracer.");

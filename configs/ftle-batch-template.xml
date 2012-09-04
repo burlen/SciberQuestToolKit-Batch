@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 <FTLEBatch>
 
+  <vtkSQLog
+      global_level="1"
+      file_name="FTLEBatch.log"/>
+
   <vtkSQBOVMetaReader
-      cb_enable="1"
       ISubset="-1 -1"
       JSubset="-1 -1"
       KSubset="-1 -1"
-      decomp_dims="4 4 1"
-      block_cache_size="16"
+      block_size="4 4 1"
       n_ghosts="1">
        <arrays> v </arrays>
   </vtkSQBOVMetaReader>
+      <!--
+      ==================
+      override block cache
+      ==================
+      decomp_dims="4 4 1"
+      block_cache_size="16"
+      -->
 
   <vtkSQPlaneSource
       origin="1 1 0"
