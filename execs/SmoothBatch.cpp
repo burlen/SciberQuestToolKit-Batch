@@ -78,7 +78,6 @@ int main(int argc, char **argv)
 
   // set up reader
   vector<string> arrays;
-  r->SetLogLevel(1);
   if (r->Initialize(root,bov.c_str(),arrays)<0)
     {
     sqErrorMacro(pCerr(),"Failed to initialize reader.");
@@ -87,7 +86,6 @@ int main(int argc, char **argv)
   int nArrays=arrays.size();
 
   // set up ghost cell generator
-  ig->SetLogLevel(1);
   if(ig->Initialize(root)<0)
     {
     sqErrorMacro(pCerr(),"Failed to initialize ghost generator.");
@@ -95,7 +93,6 @@ int main(int argc, char **argv)
     }
 
   // set up smoothing filter
-  kconv->SetLogLevel(1);
   if (kconv->Initialize(root)<0)
     {
     sqErrorMacro(pCerr(),"Failed to initialize smoothing filter.");
@@ -111,7 +108,6 @@ int main(int argc, char **argv)
         StripExtensionFromFileName(StripPathFromFileName(bov)) +
           bovId.str();
 
-  w->SetLogLevel(1);
   if(w->Initialize(root)<0)
     {
     sqErrorMacro(pCerr(),"Failed to initialize writer.");

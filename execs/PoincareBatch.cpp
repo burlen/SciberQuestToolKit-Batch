@@ -87,7 +87,6 @@ int main(int argc, char **argv)
 
   // initialize reader
   vector<string> arrays;
-  r->SetLogLevel(1);
   if (r->Initialize(root,bov.c_str(),arrays))
     {
     sqErrorMacro(pCerr(),"Failed to initialize reader.");
@@ -101,7 +100,6 @@ int main(int argc, char **argv)
   r->SetPointArrayStatus(arrays[0].c_str(),1);
 
   // initialize seed source
-  ps->SetLogLevel(1);
   if (ps->Initialize(root))
     {
     sqErrorMacro(pCerr(),"Failed to initialize seeds.");
@@ -115,7 +113,6 @@ int main(int argc, char **argv)
   ms->SetResolution(1,1);
 
   // initialize poincare mapper
-  ft->SetLogLevel(1);
   if (ft->Initialize(root))
     {
     sqErrorMacro(pCerr(),"Failed to initialize field tracer.");

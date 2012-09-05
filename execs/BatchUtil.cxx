@@ -229,12 +229,14 @@ void BroadcastConfiguration(
   controller->Broadcast(&time,1,0);
 
   vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  *log
-    << "# configName=" << config << "\n"
-    << "# bovFileName=" << bov << "\n"
-    << "# outputPath=" << outputDir << "\n"
-    << "# time=" << time << "\n"
-    << "\n";
+  if (log->GetGlobalLevel())
+    {
+    log->GetHeader()
+      << "# configName=" << config << "\n"
+      << "# bovFileName=" << bov << "\n"
+      << "# outputPath=" << outputDir << "\n"
+      << "# time=" << time << "\n";
+    }
 }
 
 // ****************************************************************************
