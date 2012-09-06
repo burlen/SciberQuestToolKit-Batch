@@ -36,6 +36,7 @@ using std::vector;
 #include <sstream>
 using std::istringstream;
 using std::ostringstream;
+#include <mpi.h>
 
 //*****************************************************************************
 vtkMultiProcessController *Initialize(int *argc, char ***argv)
@@ -158,7 +159,7 @@ void Mkdir(
       sqErrorMacro(pCerr(),
           << "Failed to mkdir " << path << "." << endl
           << "Error: " << sErr << ".");
-      exit(Finalize(controller,-1));
+      MPI_Abort(MPI_COMM_WORLD,-1);
       }
 
     }
@@ -176,6 +177,7 @@ void BroadcastConfiguration(
       string &outputDir,
       double &time)
 {
+  int ok;
   int worldRank=controller->GetLocalProcessId();
   if (worldRank==0)
     {
@@ -188,8 +190,7 @@ void BroadcastConfiguration(
         << " 3) /path/to/output/" << endl
         << " 4) time (floating point)" << endl
         << endl;
-
-      exit(Finalize(controller,-1));
+      MPI_Abort(MPI_COMM_WORLD,-1);
       }
 
     config=argv[1];
@@ -202,7 +203,7 @@ void BroadcastConfiguration(
     if (!fs.good())
       {
       cerr << "Error, failed to open " << config << endl;
-      exit(Finalize(controller,-1));
+      MPI_Abort(MPI_COMM_WORLD,-1);
       }
     fs.seekg(0,ios::end);
     size_t len=fs.tellg();
@@ -214,7 +215,7 @@ void BroadcastConfiguration(
       fs.close();
       free(configFile);
       cerr << "Error, failed to read " << config << endl;
-      exit(Finalize(controller,-1));
+      MPI_Abort(MPI_COMM_WORLD,-1);
       }
     fs.close();
     configFile[len]='\0';
@@ -258,7 +259,7 @@ vtkPVXMLElement *ParseConfiguration(
     {
     sqErrorMacro(pCerr(),
       << "Invalid XML in file " << endl << config << endl);
-    exit(Finalize(controller,-1));
+    MPI_Abort(MPI_COMM_WORLD,-1);
     }
   root->Register(0);
   parser->Delete();
@@ -268,7 +269,7 @@ vtkPVXMLElement *ParseConfiguration(
     {
     sqErrorMacro(pCerr(),
       << "This is not a valid " << requiredType << " XML hierarchy.");
-    exit(Finalize(controller,-1));
+    MPI_Abort(MPI_COMM_WORLD,-1);
     }
 
   return root;
