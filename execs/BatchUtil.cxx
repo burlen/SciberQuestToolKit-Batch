@@ -25,6 +25,10 @@ Copyright 2012 SciberQuest Inc.
 #include "postream.h"
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <signal.h>
+#if defined(__GNUG__)
+#include <execinfo.h>
+#endif
 #include <errno.h>
 #include <cfloat>
 #include <iostream>
@@ -38,11 +42,101 @@ using std::istringstream;
 using std::ostringstream;
 #include <mpi.h>
 
+/**
+print a stack trace and contents of the log.
+*/
+extern "C"
+void mpi_handler(MPI_Comm *comm, int *errcode, ...)
+{
+  char ErrorMessage[MPI_MAX_ERROR_STRING+1]={'\0'};
+  int len;
+  MPI_Error_string(*errcode, ErrorMessage, &len);
+
+  ostringstream oss;
+  oss
+     << endl
+     << "=========================================================" << endl
+     << "MPI Error:" << endl
+     << ErrorMessage << endl
+     << "=========================================================" << endl;
+#if defined(__GNUG__)
+  void *stackSymbols[128];
+  int n=backtrace(stackSymbols,128);
+  char **stackText=backtrace_symbols(stackSymbols,n);
+  oss  << "program stack:" << endl;
+  for (int i=0; i<n; ++i)
+    {
+    oss << stackText[i] << endl;
+    }
+  oss
+     << "=========================================================" << endl;
+#endif
+  oss << "program log:" << endl;
+  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
+  if (log->GetGlobalLevel())
+    {
+    log->Print(oss);
+    }
+  oss
+     << "=========================================================" << endl;
+  pCerr() << oss.str() << endl << endl;
+
+  MPI_Abort(*comm,*errcode);
+}
+
+/**
+print a stack trace and contents of the log.
+*/
+extern "C"
+void sig_handler(int signo)
+{
+
+  ostringstream oss;
+  oss
+     << endl
+     << "=========================================================" << endl
+     << "Error: caught " << signo << endl
+     << "=========================================================" << endl;
+#if defined(__GNUG__)
+  void *stackSymbols[128];
+  int n=backtrace(stackSymbols,128);
+  char **stackText=backtrace_symbols(stackSymbols,n);
+  oss  << "program stack:" << endl;
+  for (int i=0; i<n; ++i)
+    {
+    oss << stackText[i] << endl;
+    }
+  oss
+     << "=========================================================" << endl;
+#endif
+  oss << "program log:" << endl;
+  vtkSQLog *log=vtkSQLog::GetGlobalInstance();
+  if (log->GetGlobalLevel())
+    {
+    log->Print(oss);
+    }
+  oss
+     << "=========================================================" << endl;
+  pCerr() << oss.str() << endl << endl;
+}
+
 //*****************************************************************************
 vtkMultiProcessController *Initialize(int *argc, char ***argv)
 {
+  signal(SIGHUP,sig_handler);
+  signal(SIGINT,sig_handler);
+  signal(SIGABRT,sig_handler);
+  signal(SIGQUIT,sig_handler);
+  signal(SIGTERM,sig_handler);
+  signal(SIGSEGV,sig_handler);
+
   vtkMPIController *controller=vtkMPIController::New();
   controller->Initialize(argc,argv,0);
+
+  MPI_Errhandler errhandler;
+  MPI_Errhandler_create(mpi_handler, &errhandler);
+  MPI_Errhandler_set(MPI_COMM_WORLD, errhandler);
+  MPI_Errhandler_free(&errhandler);
 
   vtkMultiProcessController::SetGlobalController(controller);
 
