@@ -90,7 +90,6 @@ print a stack trace and contents of the log.
 extern "C"
 void sig_handler(int signo)
 {
-
   ostringstream oss;
   oss
      << endl
@@ -118,6 +117,7 @@ void sig_handler(int signo)
   oss
      << "=========================================================" << endl;
   pCerr() << oss.str() << endl << endl;
+  exit(-1);
 }
 
 //*****************************************************************************
@@ -162,7 +162,10 @@ int Finalize(vtkMultiProcessController* controller, int code)
     log->Write();
     }
 
-  vtkAlgorithm::SetDefaultExecutivePrototype(0);
+  vtkSQLog::DeleteGlobalInstance();
+
+  vtkMultiProcessController::SetGlobalController(NULL);
+  vtkAlgorithm::SetDefaultExecutivePrototype(NULL);
   controller->Finalize();
   controller->Delete();
 

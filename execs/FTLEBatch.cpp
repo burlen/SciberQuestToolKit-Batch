@@ -152,7 +152,7 @@ int main(int argc, char **argv)
   string outFile=outputDir+"/ftle.pvtp";
   w->SetFileName(outFile.c_str());
   w->Write();
-  w=0;
+  w=NULL;
 
   if (worldRank==0)
     {
