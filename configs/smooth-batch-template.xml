@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
 <SmoothBatch>
 
-  <vtkSQLog
-      global_level="1"
-      file_name="SmoothBatch.log"/>
+  <vtkSQLog/>
 
   <vtkSQBOVReader
-      cb_enable="1"
-      ISubset="-1 -1"
-      JSubset="-1 -1"
-      KSubset="-1 -1">
+      cb_enable="1">
        <arrays> ue </arrays>
   </vtkSQBOVReader>
 
@@ -18,23 +13,6 @@
       compute_residual="0"
       kernel_type="0"
       cpu_driver_optimization="1"/>
-   <!--
-   ==================
-   general
-   ==================
-   kernel types: Gaussian=0 Log Of Gaussian=1 Constant=2
-
-   ==================
-   cuda specific
-   ==================
-   gpu memory types: global=0 constant=1 texture=2
-
-   numberofmpirankstousecuda="0"
-   numberofactivecudadevices="0"
-   numberofwarpspercudablock="8"
-   inputcudamemorytype="2"
-   kernelcudamemorytype="0"
-   -->
 
   <vtkSQBOVWriter
       cb_enable="1"

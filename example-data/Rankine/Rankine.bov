@@ -1,0 +1,11 @@
+# rankine
+# R    =5.48008
+# v_z0 =-1
+# v_th0=10
+
+nx=31, ny=31, nz=31
+
+vector:vi
+scalar:vix
+scalar:viy
+scalar:viz

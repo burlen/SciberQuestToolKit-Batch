@@ -1,60 +1,26 @@
 <?xml version="1.0"?>
 <FTLEBatch>
 
-  <vtkSQLog
-      global_level="1"
-      file_name="FTLEBatch.log"/>
+  <vtkSQLog/>
 
   <vtkSQBOVMetaReader
-      ISubset="-1 -1"
-      JSubset="-1 -1"
-      KSubset="-1 -1"
       block_size="4 4 1"
-      n_ghosts="1">
-       <arrays> v </arrays>
+      periodic_bc="0 0 0">
+      <arrays> v </arrays>
   </vtkSQBOVMetaReader>
-      <!--
-      ==================
-      override block cache
-      ==================
-      decomp_dims="4 4 1"
-      block_cache_size="16"
-      -->
 
   <vtkSQPlaneSource
       origin="1 1 0"
       point1="126 1 0"
       point2="1 126 0"
-      resolution="128 128"
-      immediate_mode="1"/>
+      resolution="128 128"/>
 
   <vtkSQFieldTracer
       integrator_type="2"
       max_integration_interval="48"
       max_step_size="0.1"
       null_threshold="0.001"
-      dynamic_scheduler="1"
-      master_block_size="0"
-      worker_block_size="64"/>
-      <!--
-      ==================
-      settings for rk4-5
-      ==================
-      integrator_type="3"
-      min_segment_length="0"
-      max_error="1.0e-4"
-      max_number_steps="0"
-      min_step_size="0.1"
-      max_step_size="0.1"
-      max_arc_length="1000"
-
-      ==================
-      settings for rk4
-      ==================
-      integrator_type="2"
-      max_arc_length="1000"
-      max_step_size="0.1"
-      -->
+      dynamic_scheduler="0"/>
 
   <vtkSQFTLE/>
 

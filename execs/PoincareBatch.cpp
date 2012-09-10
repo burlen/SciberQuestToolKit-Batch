@@ -67,7 +67,8 @@ int main(int argc, char **argv)
 
   // intialize the log
   vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  log->SetFileName("PoincareBatch.log");
+  log->SetGlobalLevel(1);
+  log->SetFileName(outputDir+"/PoincareBatch.log");
   log->Initialize(root);
 
   // build the pipeline

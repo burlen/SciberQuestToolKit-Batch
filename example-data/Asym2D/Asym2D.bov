@@ -1,0 +1,13 @@
+#################################
+# SciberQuestToolKit
+# Metadata version 1.0
+#################################
+nx=1001, ny=1, nz=401
+x0=6950, y0=0, z0=900
+dx=1, dy=1, dz=1
+
+vector:ue
+scalar:uex
+scalar:uey
+scalar:uez
+

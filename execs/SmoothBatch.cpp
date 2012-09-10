@@ -61,7 +61,8 @@ int main(int argc, char **argv)
 
   // intialize the log
   vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  log->SetFileName("SmoothBatch.log");
+  log->SetGlobalLevel(1);
+  log->SetFileName(outputDir+"/SmoothBatch.log");
   log->Initialize(root);
 
   /// build the pipeline

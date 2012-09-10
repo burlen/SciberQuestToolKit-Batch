@@ -1,0 +1,8 @@
+# gyre
+
+nx=128, ny=128, nz=1
+vector:v
+scalar:vx
+scalar:vy
+scalar:vz
+

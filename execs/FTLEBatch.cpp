@@ -66,7 +66,8 @@ int main(int argc, char **argv)
 
   // intialize log
   vtkSQLog *log=vtkSQLog::GetGlobalInstance();
-  log->SetFileName("FTLEBatch.log");
+  log->SetGlobalLevel(1);
+  log->SetFileName(outputDir+"/FTLEBatch.log");
   log->Initialize(root);
 
   // build the pipeline

@@ -1,61 +1,25 @@
 <?xml version="1.0"?>
 <PoincareBatch>
 
-  <vtkSQLog
-      global_level="1"
-      file_name="PoincareBatch.log"/>
+  <vtkSQLog/>
 
   <vtkSQBOVMetaReader
-      cb_enable="1"
-      ISubset="-1 -1"
-      JSubset="-1 -1"
-      KSubset="-1 -1"
       block_size="4 4 4"
-      periodic_bc="1 1 1"
-      n_ghosts="1">
+      periodic_bc="1 1 1">
        <arrays> b </arrays>
   </vtkSQBOVMetaReader>
-      <!--
-      ==================
-      cache settings
-      ==================
-      decomp_dims="4 4 4"
-      block_cache_size="64"
-      -->
 
   <vtkSQPlaneSource
       origin="-3 0 -3"
       point1="3 0 -3"
       point2="-3 0 3"
-      resolution="4 4"
-      immediate_mode="1"/>
+      resolution="4 4"/>
 
   <vtkSQFieldTracer
       integrator_type="2"
       max_arc_length="1000"
       max_step_size="0.1"
       null_threshold="0.001"
-      dynamic_scheduler="1"
-      master_block_size="1"
-      worker_block_size="1"/>
-      <!--
-      ==================
-      settings for rk4-5
-      ==================
-      integrator_type="3"
-      min_segment_length="0"
-      max_error="1.0e-4"
-      max_number_steps="0"
-      min_step_size="0.1"
-      max_step_size="0.1"
-      max_arc_length="1000"
-
-      ==================
-      settings for rk4
-      ==================
-      integrator_type="2"
-      max_arc_length="1000"
-      max_step_size="0.1"
-      -->
+      dynamic_scheduler="0"/>
 
 </PoincareBatch>
