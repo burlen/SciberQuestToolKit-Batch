@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<SmoothBatch>
+
+  <vtkSQLog/>
+
+  <vtkSQBOVReader
+      cb_enable="1">
+       <arrays> B </arrays>
+  </vtkSQBOVReader>
+
+  <vtkSQKernelConvolution
+      stencil_width="19"
+      compute_residual="0"
+      kernel_type="0"
+      cpu_driver_optimization="1"/>
+
+  <vtkSQBOVWriter
+      cb_enable="1"
+      cb_buffer_size="1073741824"/>
+
+</SmoothBatch>

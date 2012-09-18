@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<FTLEBatch>
+
+  <vtkSQLog/>
+
+  <vtkSQBOVMetaReader
+      block_size="64 64 64"
+      block_cache_ram_factor="0.5"
+      periodic_bc="1 1 0">
+       <arrays> B </arrays>
+  </vtkSQBOVMetaReader>
+
+  <vtkSQPlaneSource
+      origin="16 255 16"
+      point1="1001 255 16"
+      point2="16 255 661"
+      resolution="985 645"/>
+
+  <vtkSQFieldTracer
+      integrator_type="2"
+      max_integration_interval="3000"
+      max_step_size="0.001"
+      null_threshold="0.001"/>
+
+  <vtkSQFTLE/>
+
+</FTLEBatch>

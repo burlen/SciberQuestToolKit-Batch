@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PoincareBatch>
+
+  <!--
+  1024*512*684*4*3=4GB
+  1024*512*4*3=6MB
+  666/128=5 => 30MB per block
+  1 core per socket
+  -->
+
+  <vtkSQBOVMetaReader
+      cb_enable="1"
+      ISubset="-1 -1"
+      JSubset="-1 -1"
+      KSubset="-1 -1"
+      decomp_dims="16 8 8"
+      block_cache_size="768"
+      periodic_bc="1 1 0">
+       <arrays> B </arrays>
+  </vtkSQBOVMetaReader>
+
+  <vtkSQPlaneSource
+      origin="9 255 9"
+      point1="1006 255 9"
+      point2="9 255 666"
+      resolution="42 27"
+      immediate_mode="1"/>
+
+  <vtkSQFieldTracer
+      integrator_type="2"
+      max_arc_length="200000"
+      max_step_size="0.001"
+      null_threshold="0.001"
+      forward_only="0"
+      dynamic_scheduler="1"
+      master_block_size="1"
+      worker_block_size="2"/>
+      <!--
+      ==================
+      settings for rk4-5
+      ==================
+      integrator_type="3"
+      min_segment_length="0"
+      max_error="1.0e-4"
+      max_number_steps="0"
+      min_step_size="0.1"
+      max_step_size="0.1"
+      max_arc_length="1000"
+      ==================
+      settings for rk4
+      ==================
+      integrator_type="2"
+      max_arc_length="1000"
+      max_step_size="0.1"
+      -->
+</PoincareBatch>
