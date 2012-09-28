@@ -7,6 +7,7 @@
 Copyright 2012 SciberQuest Inc.
 */
 #include "BatchUtil.h"
+#include "vtkInitializationHelper.h"
 #include "vtkPVXMLElement.h"
 #include "vtkPVXMLParser.h"
 #include "vtkMultiProcessController.h"
@@ -123,6 +124,8 @@ void sig_handler(int signo)
 //*****************************************************************************
 vtkMultiProcessController *Initialize(int *argc, char ***argv)
 {
+  vtkInitializationHelper::TestingInitialize();
+
   signal(SIGHUP,sig_handler);
   signal(SIGINT,sig_handler);
   signal(SIGABRT,sig_handler);
@@ -168,6 +171,8 @@ int Finalize(vtkMultiProcessController* controller, int code)
   vtkAlgorithm::SetDefaultExecutivePrototype(NULL);
   controller->Finalize();
   controller->Delete();
+
+  vtkInitializationHelper::TestingFinalize();
 
   return code;
 }
