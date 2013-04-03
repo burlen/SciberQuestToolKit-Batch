@@ -56,9 +56,9 @@ install(TARGETS FTLEBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 #
 # TODO -- the following need integrate batch utils and be tested
 #
-#add_executable(MagnetosphereTopoBatch MagnetosphereTopoBatch.cpp DebugUtil.cxx BatchUtil.cxx)
-#target_link_libraries(MagnetosphereTopoBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
-#install(TARGETS MagnetosphereTopoBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+add_executable(MagnetosphereTopoBatch MagnetosphereTopoBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+target_link_libraries(MagnetosphereTopoBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+install(TARGETS MagnetosphereTopoBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 #
 #add_executable(VortexDetectBatch VortexDetectBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 #target_link_libraries(VortexDetectBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})

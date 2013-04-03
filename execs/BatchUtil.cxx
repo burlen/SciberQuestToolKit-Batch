@@ -124,7 +124,7 @@ void sig_handler(int signo)
 //*****************************************************************************
 vtkMultiProcessController *Initialize(int *argc, char ***argv)
 {
-  vtkInitializationHelper::TestingInitialize();
+  vtkInitializationHelper::StandaloneInitialize();
 
   signal(SIGHUP,sig_handler);
   signal(SIGINT,sig_handler);
@@ -172,7 +172,7 @@ int Finalize(vtkMultiProcessController* controller, int code)
   controller->Finalize();
   controller->Delete();
 
-  vtkInitializationHelper::TestingFinalize();
+  vtkInitializationHelper::StandaloneFinalize();
 
   return code;
 }
