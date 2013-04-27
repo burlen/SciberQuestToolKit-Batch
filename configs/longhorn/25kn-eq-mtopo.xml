@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<TopologyBatch>
+
+  <vtkSQLog/>
+
+  <vtkSQBOVMetaReader
+      block_size="96 96 96"
+      periodic_bc="0 0 0">
+      <arrays> b </arrays>
+  </vtkSQBOVMetaReader>
+
+  <vtkSQHemisphereSource
+      center="511 511 511"
+      radius="32"
+      resolution="32"
+      north="0 1 0"/>
+
+  <vtkSQPlaneSource
+      origin="200 511 0"
+      point1="1023 511 0"
+      point2="200 511 1023"
+      resolution="823 1023"/>
+
+  <vtkSQFieldTracer
+      integrator_type="3"
+      max_arc_length="10230"
+      max_number_of_steps="10000"
+      min_step_size="1.0e-8"
+      max_step_size="0.1"
+      max_error="0.001"
+      null_threshold="0.001"
+      dynamic_scheduler="1"
+      master_block_size="16"
+      worker_block_size="512"/>
+
+</TopologyBatch>
