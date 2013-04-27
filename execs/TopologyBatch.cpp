@@ -65,17 +65,13 @@ int main(int argc, char **argv)
 
   // parse config
   vtkSmartPointer<vtkPVXMLElement> root;
-  root.TakeReference(ParseConfiguration(controller,config,"MagnetosphereTopologyBatch"));
+  root.TakeReference(ParseConfiguration(controller,config,"TopologyBatch"));
 
   // intialize log
   vtkSQLog *log=vtkSQLog::GetGlobalInstance();
   log->SetGlobalLevel(1);
-  log->SetFileName(outputDir+"/MagnetosphereTopologyBatch.log");
+  log->SetFileName(outputDir+"/TopologyBatch.log");
   log->Initialize(root);
-
-
-  /// build the pipeline
-  vtkPVXMLElement *elem;
 
   // set up reader
   vector<string> arrays;
@@ -97,8 +93,9 @@ int main(int argc, char **argv)
   vtkSmartPointer<vtkSQHemisphereSource> hs
     = vtkSmartPointer<vtkSQHemisphereSource>::New();
 
-  if (!hs->Initialize(root))
+  if (hs->Initialize(root))
     {
+    sqErrorMacro(pCerr(),"Failed to intialize the terminiator.");
     hs=NULL;
     }
 
@@ -141,6 +138,8 @@ int main(int argc, char **argv)
     sqErrorMacro(pCerr(),"Failed to initialize field tracer.");
     return -1;
     }
+  ftm->SetMode(vtkSQFieldTracer::MODE_TOPOLOGY);
+  ftm->SetForwardOnly(0);
   ftm->SetSqueezeColorMap(0);
 
   ftm->AddVectorInputConnection(r->GetOutputPort(0));
@@ -157,6 +156,10 @@ int main(int argc, char **argv)
         0,
         vtkDataObject::FIELD_ASSOCIATION_POINTS,
         arrays[0].c_str());
+  r=NULL;
+  hs=NULL;
+  ps=NULL;
+  vs=NULL;
 
   // intialize the pipeline
   ConfigureExecutive(controller,ftm,time);
@@ -180,12 +183,15 @@ int main(int argc, char **argv)
   string outFile=outputDir+"/mtopo.pvtp";
   w->SetFileName(outFile.c_str());
   w->Write();
-  w=NULL;
 
   if (worldRank==0)
     {
     pCerr() << "Wrote: " << outFile.c_str() << "." << endl;
     }
+
+  w=NULL;
+  ftm=NULL;
+  root=NULL;
 
   return Finalize(controller,0);
 }

@@ -40,26 +40,30 @@ find_library(SciberQuestToolKit_Lib SciberQuestToolKit "${ParaView_DIR}/bin" "${
 message(STATUS "SciberQuestToolKit found: ${SciberQuestToolKit_DIR}")
 message(STATUS "SciberQUestToolKit lib: ${SciberQuestToolKit_Lib}")
 
+set(EXEC_LIBS
+  ${MPI_LIBRARIES}
+  ${VTK_LIBRARIES}
+  ${SciberQuestToolKit_Lib}
+  )
+
 # executables
 add_executable(PoincareBatch PoincareBatch.cpp DebugUtil.cxx BatchUtil.cxx)
-target_link_libraries(PoincareBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+target_link_libraries(PoincareBatch ${EXEC_LIBS})
 install(TARGETS PoincareBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
 add_executable(SmoothBatch SmoothBatch.cpp DebugUtil.cxx BatchUtil.cxx)
-target_link_libraries(SmoothBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+target_link_libraries(SmoothBatch ${EXEC_LIBS})
 install(TARGETS SmoothBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
 add_executable(FTLEBatch FTLEBatch.cpp DebugUtil.cxx BatchUtil.cxx)
-target_link_libraries(FTLEBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
+target_link_libraries(FTLEBatch ${EXEC_LIBS})
 install(TARGETS FTLEBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
 
-#
+add_executable(TopologyBatch TopologyBatch.cpp DebugUtil.cxx BatchUtil.cxx)
+target_link_libraries(TopologyBatch ${EXEC_LIBS})
+install(TARGETS TopologyBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+
 # TODO -- the following need integrate batch utils and be tested
-#
-add_executable(MagnetosphereTopoBatch MagnetosphereTopoBatch.cpp DebugUtil.cxx BatchUtil.cxx)
-target_link_libraries(MagnetosphereTopoBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
-install(TARGETS MagnetosphereTopoBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
-#
 #add_executable(VortexDetectBatch VortexDetectBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 #target_link_libraries(VortexDetectBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
 #install(TARGETS VortexDetectBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)

@@ -5,6 +5,19 @@ rm -rf ./example-output/*
 MPIRUN=mpirun
 NP=8
 
+
+echo
+echo
+echo "Running topology example..."
+echo "========================================================"
+time \
+  $MPIRUN -np $NP \
+    ./bin/execs/TopologyBatch \
+    ./configs/mtopo-template.xml \
+    ./example-data/SmallVector/SmallVector.bovm \
+    ./example-output/topo-smvec \
+    0
+
 echo
 echo
 echo "Running poincare mapper example..."
@@ -29,7 +42,6 @@ time \
     ./example-data/Gyres/Gyres.bov \
     ./example-output/ftle-gyres \
     0
-
 
 echo
 echo
