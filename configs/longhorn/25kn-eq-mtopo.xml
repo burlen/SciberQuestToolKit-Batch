@@ -4,8 +4,9 @@
   <vtkSQLog/>
 
   <vtkSQBOVMetaReader
-      block_size="96 96 96"
-      periodic_bc="0 0 0">
+      block_size="64 128 64"
+      periodic_bc="0 0 0"
+      block_cache_ram_factor="0.5">
       <arrays> b </arrays>
   </vtkSQBOVMetaReader>
 

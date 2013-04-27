@@ -2,7 +2,7 @@
 
 # following parameters can be modifed here for different users
 ACCT=TG-ATM090046
-QUEUE=long
+QUEUE=request
 export PV_PATH=/home/01237/bloring/apps/PV3-next-IVR/lib/paraview-3.98/
 export LD_LIBRARY_PATH=$PV_PATH:$LD_LIBRARY_PATH
 
@@ -36,6 +36,7 @@ SRC_DIR=$5
 CONFIG_FILE=$6
 BOV_FILE=$7
 DEST_DIR=$8
+MAX_JOBS_IN_QUEUE=5
 
 echo "PV_PATH=$PV_PATH"
 echo "ACCT=$ACCT"
@@ -48,6 +49,7 @@ echo "SRC_DIR=$SRC_DIR"
 echo "CONFIG_FILE=$CONFIG_FILE"
 echo "BOV_FILE=$BOV_FILE"
 echo "DEST_DIR=$DEST_DIR"
+echo "MAX_JOBS_IN_QUEUE=$MAX_JOBS_IN_QUEUE"
 
 for i in `seq 1 $required_n_args`
 do
@@ -58,25 +60,34 @@ trap "echo exiting; exit -1;" INT TERM
 
 for field in "$@"
 do
-  for file in `ls  $SRC_DIR/$field[xyz]*\_[0-9]*.gda | xargs -n1 basename`
+  # process steps in reverse order
+  # later steps are typically more interetsing
+  steps=`ls $SRC_DIR/$field[x]*\_[0-9]*.gda | cut -d_ -f2 | cut -d. -f1 | sort -rn`
+  for step in $steps
   do
-    #if [[ ! -a $DEST_DIR/$file ]]
-    #then
+    # skip the run if the output dir already
+    # exists
+    stepdir=`printf %010.f $step`
+    if [ -e $DEST_DIR/$stepdir ] && [ -d $DEST_DIR/$stepdir ]
+    then
+      # already run
+      echo "skipped submission for $field $step"
+    else
+      # submit a job for this file
       # only allowed 20 jobs in the queue
       over_limit=1
       while [ "$over_limit" -eq 1 ]
       do
         njobs=`qstat | wc -l`
-        if [ "$njobs" -lt 19 ]
+        if [ "$njobs" -lt 10 ]
         then
           over_limit=0
         fi
       done
 
-      step=`echo $file | cut -d_ -f2 | cut -d. -f1`
       echo "submitted for $field $step"
 
-      echo \
+      #echo \
       qsub -A $ACCT -V -N $field-$step -q $QUEUE -P vis -pe $N_CPUS_PER_NODE\way $N_CPUS -l h_rt=$RUN_TIME \
            $PV_PATH/sqtk-batch-longhorn.qsub \
            $PV_PATH \
@@ -85,7 +96,6 @@ do
            $SRC_DIR/$BOV_FILE \
            $DEST_DIR \
            $step
-    #fi
+    fi
   done
 done
-
