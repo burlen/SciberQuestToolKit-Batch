@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# (C) 2013 SciberQuest Inc.
+
+#$ -V                                   # Inherit the submission environment
+#$ -cwd                                 # Start job in submission dir
+#$ -j y                                 # Combine stderr and stdout into stdout
+#$ -o $HOME/$JOB_NAME.out               # Name of the output file
+
+if [ $# != 6 ]
+then
+  echo "usage:"
+  echo $0 PV_PATH EXE CONFIG_FILE BOV_FILE OUTPUT_PATH TIME
+  exit -1
+fi
+
+PV_PATH=$1
+EXE=$2
+CONFIG_FILE=$3
+BOV_FILE=$4
+OUTPUT_PATH=$5
+TIME=$6
+
+date
+echo "PV_PATH=$PV_PATH"
+echo "EXE=$EXE"
+echo "CONFIG_FILE=$CONFIG_FILE"
+echo "BOV_FILE=$BOV_FILE"
+echo "OUTPUT_PATH=$OUTPUT_PATH"
+echo "TIME=$TIME"
+
+export LD_LIBRARY_PATH=$PV_PATH:$LD_LIBRARY_PATH
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+
+
+
+IBRUN_PATH=/share/sge6.2/default/pe_scripts
+
+$IBRUN_PATH/ibrun $EXE $CONFIG_FILE $BOV_FILE $OUTPUT_PATH $TIME
+
