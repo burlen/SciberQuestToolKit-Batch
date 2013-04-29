@@ -24,10 +24,10 @@
       integrator_type="2"
       max_arc_length="10000"
       max_number_of_steps="10000"
-      min_step_size="0.001"
-      max_step_size="0.1"
+      min_step_size="0.2"
+      max_step_size="0.2"
       null_threshold="0.001"
-      dynamic_scheduler="1"
+      dynamic_scheduler="0"
       master_block_size="4"
       worker_block_size="16"/>
 

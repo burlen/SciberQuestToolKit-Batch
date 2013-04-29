@@ -3,10 +3,12 @@
 
   <vtkSQLog/>
 
+  <!--block_cache_ram_factor="0.45"-->
   <vtkSQBOVMetaReader
       block_size="64 128 64"
       periodic_bc="0 0 0"
-      block_cache_ram_factor="0.5">
+      decomp_dims="10 10 10"
+      block_cache_size="200">
       <arrays> b </arrays>
   </vtkSQBOVMetaReader>
 
@@ -23,14 +25,14 @@
       resolution="823 1023"/>
 
   <vtkSQFieldTracer
-      integrator_type="3"
+      integrator_type="2"
       max_arc_length="10230"
       max_number_of_steps="10000"
-      min_step_size="1.0e-8"
+      min_step_size="0.1"
       max_step_size="0.1"
       max_error="0.001"
       null_threshold="0.001"
-      dynamic_scheduler="1"
+      dynamic_scheduler="0"
       master_block_size="16"
       worker_block_size="512"/>
 

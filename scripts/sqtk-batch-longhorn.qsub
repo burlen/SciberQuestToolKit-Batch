@@ -21,7 +21,6 @@ BOV_FILE=$4
 OUTPUT_PATH=$5
 TIME=$6
 
-date
 echo "PV_PATH=$PV_PATH"
 echo "EXE=$EXE"
 echo "CONFIG_FILE=$CONFIG_FILE"
@@ -32,9 +31,8 @@ echo "TIME=$TIME"
 export LD_LIBRARY_PATH=$PV_PATH:$LD_LIBRARY_PATH
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
-
-
+date
 IBRUN_PATH=/share/sge6.2/default/pe_scripts
-
 $IBRUN_PATH/ibrun $EXE $CONFIG_FILE $BOV_FILE $OUTPUT_PATH $TIME
+date
 

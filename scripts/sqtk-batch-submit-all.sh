@@ -5,6 +5,7 @@ ACCT=TG-ATM090046
 QUEUE=request
 export PV_PATH=/home/01237/bloring/apps/PV3-next-IVR/lib/paraview-3.98/
 export LD_LIBRARY_PATH=$PV_PATH:$LD_LIBRARY_PATH
+output=mtopo.pvtp
 
 n_args=$#
 required_n_args=8
@@ -58,6 +59,11 @@ done
 
 trap "echo exiting; exit -1;" INT TERM
 
+# job for first dependency
+#qsub -A $ACCT -V -N first-dep -q $QUEUE -P vis -pe 1way 8 \
+#   -l h_rt=00:05:00 $PV_PATH/sqtk-batch-longhorn.qsub
+#JID=first-dep
+
 for field in "$@"
 do
   # process steps in reverse order
@@ -68,7 +74,7 @@ do
     # skip the run if the output dir already
     # exists
     stepdir=`printf %010.f $step`
-    if [ -e $DEST_DIR/$stepdir ] && [ -d $DEST_DIR/$stepdir ]
+    if [ -e $DEST_DIR/$stepdir/$output ]
     then
       # already run
       echo "skipped submission for $field $step"
@@ -96,6 +102,8 @@ do
            $SRC_DIR/$BOV_FILE \
            $DEST_DIR \
            $step
+      #     -hold_jid $JID \
+      #JID=$field-$step
     fi
   done
 done
