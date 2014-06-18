@@ -32,6 +32,8 @@ using std::endl;
 using std::vector;
 #include <string>
 using std::string;
+#include <sstream>
+using std::ostringstream;
 
 
 //-----------------------------------------------------------------------------

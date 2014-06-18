@@ -43,6 +43,12 @@ using std::istringstream;
 using std::ostringstream;
 #include <mpi.h>
 
+#ifndef WIN32
+  #define PATH_SEP "/"
+#else
+  #define PATH_SEP "\\"
+#endif
+
 /**
 print a stack trace and contents of the log.
 */
@@ -427,4 +433,50 @@ string NativePath(string path)
   #endif
 
   return "";
+}
+
+// Returns the path not including the file name and not
+// including the final PATH_SEP. If PATH_SEP isn't found
+// then ".PATH_SEP" is returned.
+//*****************************************************************************
+std::string StripFileNameFromPath(const std::string fileName)
+{
+  size_t p;
+  p=fileName.find_last_of(PATH_SEP);
+  if (p==std::string::npos)
+    {
+    // current directory
+    return "." PATH_SEP;
+    }
+  return fileName.substr(0,p); // TODO Why does this leak?
+}
+
+// Returns the file name not including the extension (ie what ever is after
+// the last ".". If there is no "." then the fileName is retnurned unmodified.
+//*****************************************************************************
+std::string StripExtensionFromFileName(const std::string fileName)
+{
+  size_t p;
+  p=fileName.rfind(".");
+  if (p==std::string::npos)
+    {
+    // current directory
+    return fileName;
+    }
+  return fileName.substr(0,p);
+}
+
+// Returns the file name from the given path. If PATH_SEP isn't found
+// then the filename is returned unmodified.
+//*****************************************************************************
+std::string StripPathFromFileName(const std::string fileName)
+{
+  size_t p;
+  p=fileName.find_last_of(PATH_SEP);
+  if (p==std::string::npos)
+    {
+    // current directory
+    return fileName;
+    }
+  return fileName.substr(p+1,std::string::npos); // TODO Why does this leak?
 }

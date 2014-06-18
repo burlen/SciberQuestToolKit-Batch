@@ -91,5 +91,19 @@ string Mkdir(
       vtkMultiProcessController *controller,
       string &path,
       double time);
+/**
+Return the base path
+*/
+string StripFileNameFromPath(const string fileName);
 
+/**
+Return the filename without extension
+*/
+string StripExtensionFromFileName(const string fileName);
+
+
+/**
+Return the filename without it's path
+*/
+string StripPathFromFileName(const string fileName);
 #endif

@@ -18,14 +18,15 @@ message(STATUS "MPI found.")
 # sqtk plugin
 get_filename_component(ParaView_SOURCE ${PARAVIEW_USE_FILE} PATH)
 set(SciberQuestToolKit_DIR "${ParaView_SOURCE}/../Plugins/SciberQuestToolKit" CACHE FILEPATH "SciberQuestToolKit sources")
-include_directories("${SciberQuestToolKit_DIR}")
+include_directories("${SciberQuestToolKit_DIR}/SciberQuest/")
+include_directories("${ParaView_DIR}/Plugins/SciberQuestToolKit/SciberQuest")
 find_library(SciberQuestToolKit_Lib SciberQuestToolKit "${ParaView_DIR}/bin" "${ParaView_DIR}/lib")
 message(STATUS "SciberQuestToolKit found: ${SciberQuestToolKit_DIR}")
 message(STATUS "SciberQUestToolKit lib: ${SciberQuestToolKit_Lib}")
-
 set(EXEC_LIBS
   ${MPI_LIBRARIES}
   ${VTK_LIBRARIES}
+  vtkSciberQuest
   ${SciberQuestToolKit_Lib}
   )
 
