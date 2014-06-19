@@ -49,6 +49,28 @@ using std::ostringstream;
   #define PATH_SEP "\\"
 #endif
 
+#ifdef WIN32
+  #include <Winsock2.h>
+#else
+  #include <unistd.h>
+#endif
+
+//-----------------------------------------------------------------------------
+std::ostream &pCerr()
+{
+  int WorldRank=0;
+  int ok;
+  MPI_Initialized(&ok);
+  if (ok) MPI_Comm_rank(MPI_COMM_WORLD,&WorldRank);
+
+  char host[256]={'\0'};
+  gethostname(host,256);
+
+  std::cerr << "[" << host << ":" << WorldRank << "] ";
+
+  return std::cerr;
+}
+
 /**
 print a stack trace and contents of the log.
 */
