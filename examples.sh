@@ -2,9 +2,8 @@
 
 rm -rf ./example-output/*
 
-MPIRUN=aprun
-NP=24
-
+MPIRUN="${MPIRUN:=mpiexec}"
+NP="${NP:=8}"
 
 echo
 echo
@@ -17,6 +16,7 @@ time \
     ./example-data/SmallVector/SmallVector.bovm \
     ./example-output/topo-smvec \
     0
+exit 0
 
 echo
 echo

@@ -14,11 +14,21 @@
       radius="1"
       resolution="32"/>
 
+<!--
   <vtkSQPlaneSource
       origin="0 0 2"
       point1="7 0 2"
       point2="0 7 2"
       resolution="128 128"/>
+-->
+
+  <vtkSQVolumeSource
+      origin="0 0 1.5"
+      point1="7 0 1.5"
+      point2="0 7 1.5"
+      point3="0 7 2.5"
+      resolution="15 15 3"
+      immediate_mode="0"/>
 
   <vtkSQFieldTracer
       integrator_type="2"
