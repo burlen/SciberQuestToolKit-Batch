@@ -2,8 +2,8 @@
 
 rm -rf ./example-output/*
 
-MPIRUN=mpirun
-NP=8
+MPIRUN=aprun
+NP=24
 
 
 echo
@@ -11,7 +11,7 @@ echo
 echo "Running topology example..."
 echo "========================================================"
 time \
-  $MPIRUN -np $NP \
+  $MPIRUN -n $NP \
     ./bin/execs/TopologyBatch \
     ./configs/mtopo-template.xml \
     ./example-data/SmallVector/SmallVector.bovm \
@@ -23,7 +23,7 @@ echo
 echo "Running poincare mapper example..."
 echo "========================================================"
 time \
-  $MPIRUN -np $NP \
+  $MPIRUN -n $NP \
     ./bin/execs/PoincareBatch \
     ./configs/poincare-batch-template.xml \
     ./example-data/MagneticIslands/MagneticIslands.bov \
@@ -36,7 +36,7 @@ echo
 echo "Running ftle example..."
 echo "========================================================"
 time \
-  $MPIRUN -np $NP \
+  $MPIRUN -n $NP \
     ./bin/execs/FTLEBatch \
     ./configs/ftle-batch-template.xml \
     ./example-data/Gyres/Gyres.bov \
@@ -48,7 +48,7 @@ echo
 echo "Running gaussian smoothing example..."
 echo "========================================================"
 time \
-  $MPIRUN -np $NP \
+  $MPIRUN -n $NP \
     ./bin/execs/SmoothBatch \
     ./configs/smooth-batch-template.xml \
     ./example-data/Asym2D/Asym2D.bov  \

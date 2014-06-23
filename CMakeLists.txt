@@ -31,10 +31,13 @@ find_package(ParaView REQUIRED)
 include(${PARAVIEW_USE_FILE})
 message(STATUS "ParaView ${PARAVIEW_VERSION_FULL} found: ${ParaView_DIR}")
 
-set(SQTK_INSTALL_PREFIX
+set(SQTK_LIB_INSTALL_PREFIX
   "${CMAKE_INSTALL_PREFIX}/lib/paraview-${PARAVIEW_VERSION_MAJOR}.${PARAVIEW_VERSION_MINOR}"
   )
-message(STATUS "SciberQuestToolKit batch executables will be installed to ${SQTK_INSTALL_PREFIX}")
+set(SQTK_BIN_INSTALL_PREFIX
+  "${CMAKE_INSTALL_PREFIX}/bin/"
+  )
+message(STATUS "SciberQuestToolKit batch executables will be installed to ${SQTK_BIN_INSTALL_PREFIX}")
 
 add_subdirectory(execs)
 add_subdirectory(scripts)

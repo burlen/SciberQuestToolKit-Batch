@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 2.8)
 cmake_policy(SET CMP0003 NEW)
 
-set(SQTK_SCRIPTS
-  sqtk-batch-longhorn.qsub)
-
-install(FILES ${SQTK_SCRIPTS} DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#set(SQTK_SCRIPTS
+#  sqtk-batch-longhorn.qsub)
+#
+#install(FILES ${SQTK_SCRIPTS} DESTINATION ${SQTK_INSTALL_PREFIX}/)

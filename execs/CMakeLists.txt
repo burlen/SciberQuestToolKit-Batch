@@ -33,25 +33,25 @@ set(EXEC_LIBS
 # executables
 add_executable(PoincareBatch PoincareBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(PoincareBatch ${EXEC_LIBS})
-install(TARGETS PoincareBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+install(TARGETS PoincareBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
 
 add_executable(SmoothBatch SmoothBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(SmoothBatch ${EXEC_LIBS})
-install(TARGETS SmoothBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+install(TARGETS SmoothBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
 
 add_executable(FTLEBatch FTLEBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(FTLEBatch ${EXEC_LIBS})
-install(TARGETS FTLEBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+install(TARGETS FTLEBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
 
 add_executable(TopologyBatch TopologyBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 target_link_libraries(TopologyBatch ${EXEC_LIBS})
-install(TARGETS TopologyBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+install(TARGETS TopologyBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
 
 # TODO -- the following need integrate batch utils and be tested
 #add_executable(VortexDetectBatch VortexDetectBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 #target_link_libraries(VortexDetectBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
-#install(TARGETS VortexDetectBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#install(TARGETS VortexDetectBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
 #
 #add_executable(SlicerBatch SlicerBatch.cpp DebugUtil.cxx BatchUtil.cxx)
 #target_link_libraries(SlicerBatch ${MPI_LIBRARIES} ${SciberQuestToolKit_Lib})
-#install(TARGETS SlicerBatch DESTINATION ${SQTK_INSTALL_PREFIX}/)
+#install(TARGETS SlicerBatch DESTINATION ${SQTK_BIN_INSTALL_PREFIX}/)
