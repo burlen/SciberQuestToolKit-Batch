@@ -22,12 +22,14 @@
       resolution="128 128"/>
 -->
 
+<!-- if not immediate then must use dynamic scheduler -->
+
   <vtkSQVolumeSource
       origin="0 0 1.5"
       point1="7 0 1.5"
       point2="0 7 1.5"
-      point3="0 7 2.5"
-      resolution="15 15 3"
+      point3="0 0 2.5"
+      resolution="128 128 32"
       immediate_mode="0"/>
 
   <vtkSQFieldTracer
@@ -37,7 +39,7 @@
       min_step_size="0.2"
       max_step_size="0.2"
       null_threshold="0.001"
-      dynamic_scheduler="0"
+      dynamic_scheduler="1"
       master_block_size="4"
       worker_block_size="16"/>
 
