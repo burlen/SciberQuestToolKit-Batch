@@ -154,20 +154,24 @@ vtkMultiProcessController *Initialize(int *argc, char ***argv)
 {
   vtkInitializationHelper::StandaloneInitialize();
 
+#ifdef SQTK_CATCH_SIGS
   signal(SIGHUP,sig_handler);
   signal(SIGINT,sig_handler);
   signal(SIGABRT,sig_handler);
   signal(SIGQUIT,sig_handler);
   signal(SIGTERM,sig_handler);
   signal(SIGSEGV,sig_handler);
+#endif
 
   vtkMPIController *controller=vtkMPIController::New();
   controller->Initialize(argc,argv,0);
 
+#ifdef SQTK_CATCH_MPI
   MPI_Errhandler errhandler;
   MPI_Errhandler_create(mpi_handler, &errhandler);
   MPI_Errhandler_set(MPI_COMM_WORLD, errhandler);
   MPI_Errhandler_free(&errhandler);
+#endif
 
   vtkMultiProcessController::SetGlobalController(controller);
 
@@ -457,10 +461,11 @@ string NativePath(string path)
   return "";
 }
 
+/*
 // Returns the path not including the file name and not
 // including the final PATH_SEP. If PATH_SEP isn't found
 // then ".PATH_SEP" is returned.
-//*****************************************************************************
+// ****************************************************************************
 std::string StripFileNameFromPath(const std::string fileName)
 {
   size_t p;
@@ -475,7 +480,7 @@ std::string StripFileNameFromPath(const std::string fileName)
 
 // Returns the file name not including the extension (ie what ever is after
 // the last ".". If there is no "." then the fileName is retnurned unmodified.
-//*****************************************************************************
+// ****************************************************************************
 std::string StripExtensionFromFileName(const std::string fileName)
 {
   size_t p;
@@ -490,7 +495,7 @@ std::string StripExtensionFromFileName(const std::string fileName)
 
 // Returns the file name from the given path. If PATH_SEP isn't found
 // then the filename is returned unmodified.
-//*****************************************************************************
+// ****************************************************************************
 std::string StripPathFromFileName(const std::string fileName)
 {
   size_t p;
@@ -502,3 +507,4 @@ std::string StripPathFromFileName(const std::string fileName)
     }
   return fileName.substr(p+1,std::string::npos); // TODO Why does this leak?
 }
+*/
