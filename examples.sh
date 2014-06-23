@@ -13,7 +13,7 @@ echo "========================================================"
 time \
   $MPIRUN -n $NP \
     ./bin/execs/TopologyBatch \
-    ./configs/mtopo-template.xml \
+    ./configs/templates/mtopo-template.xml \
     ./example-data/SmallVector/SmallVector.bovm \
     ./example-output/topo-smvec \
     0
@@ -25,7 +25,7 @@ echo "========================================================"
 time \
   $MPIRUN -n $NP \
     ./bin/execs/PoincareBatch \
-    ./configs/poincare-batch-template.xml \
+    ./configs/templates/poincare-batch-template.xml \
     ./example-data/MagneticIslands/MagneticIslands.bov \
     ./example-output/poincare-magi \
     0
@@ -38,7 +38,7 @@ echo "========================================================"
 time \
   $MPIRUN -n $NP \
     ./bin/execs/FTLEBatch \
-    ./configs/ftle-batch-template.xml \
+    ./configs/templates/ftle-batch-template.xml \
     ./example-data/Gyres/Gyres.bov \
     ./example-output/ftle-gyres \
     0
@@ -50,7 +50,7 @@ echo "========================================================"
 time \
   $MPIRUN -n $NP \
     ./bin/execs/SmoothBatch \
-    ./configs/smooth-batch-template.xml \
+    ./configs/templates/smooth-batch-template.xml \
     ./example-data/Asym2D/Asym2D.bov  \
     ./example-output/smoothing-asym \
     292500
